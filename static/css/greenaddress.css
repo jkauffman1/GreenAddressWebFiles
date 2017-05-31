@@ -3010,6 +3010,9 @@ input[type="button"].btn-block {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   background-clip: padding-box;
 }
+.uib-datepicker-popup {
+  display: block;
+}
 .dropdown-menu.pull-right {
   right: 0;
   left: auto;
