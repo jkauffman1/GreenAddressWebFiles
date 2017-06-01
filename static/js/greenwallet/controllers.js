@@ -3,6 +3,16 @@ angular.module('greenWalletControllers', [])
         function WalletController($scope, tx_sender, $uibModal, notices, gaEvent, $location, wallets, $http, $q, parse_bitcoin_uri, parseKeyValue, backButtonHandler, $uibModalStack, sound, blind, storage) {
     $scope.cordova_platform = window.cordova && cordova.platformId;
 
+    // Patch $uibModal.open to force backdrop = 'static' for all modal
+    // dialogs. This has the effect of disabling clicking outside of the
+    // dialog to dismiss it (the default bootstrap behaviour). Users are
+    // forced to click 'close' or 'cancel' to dismiss the dialog
+    var old_uibModalopen = $uibModal.open;
+    $uibModal.open = function(modalOptions) {
+        modalOptions.backdrop = 'static';
+        return old_uibModalopen(modalOptions);
+    };
+
     var exchanges = $scope.exchanges = {
         BITSTAMP: 'Bitstamp',
         LOCALBTC: 'LocalBitcoins',
