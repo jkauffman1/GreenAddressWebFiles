@@ -119,7 +119,7 @@ def run_gettext(dirname, for_js):
         catalog.add(message, None, [(filename, lineno)],
                     auto_comments=comments, context=context)
 
-    sio = io.StringIO()
+    sio = io.BytesIO()
     write_po(sio, catalog)
 
     return sio.getvalue()
