@@ -145,6 +145,9 @@ def compile_domain(domain):
 
 
 def main():
+    import sys
+    print("sys.argv: {}".format(sys.argv))
+
     parser = argparse.ArgumentParser(description='Renders templates.')
     parser.add_argument('outdir', metavar='OUTDIR',
         help='The output directory')
