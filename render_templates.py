@@ -68,7 +68,7 @@ class TemplatesRenderer(object):
                 return s
             else:
                 return s.decode('utf-8')
-        ugettext = lambda m: tr.ugettext(to_unicode(m.replace('\n', '')))
+        ugettext = lambda m: tr.gettext(to_unicode(m.replace('\n', '')))
         def ungettext(s, p, n):
             tr.ungettext(
                 # new lines in html are only for word wrapping, so skip them
