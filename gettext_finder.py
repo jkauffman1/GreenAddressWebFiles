@@ -9,7 +9,7 @@ import jinja2
 import imp
 
 imp.reload(sys)
-sys.setdefaultencoding('utf-8')  # make jinja decode utf8 strings automatically
+#sys.setdefaultencoding('utf-8')  # make jinja decode utf8 strings automatically
 
 logging.basicConfig(level=logging.DEBUG, stream=sys.stderr)
 log = logging.getLogger('main')
