@@ -26,17 +26,17 @@ except ImportError:
 
 
 _js_escapes = {
-    ord(u'\\'): u'\\u005C',
-    ord(u'\''): u'\\u0027',
-    ord(u'"'): u'\\u0022',
-    ord(u'>'): u'\\u003E',
-    ord(u'<'): u'\\u003C',
-    ord(u'&'): u'\\u0026',
-    ord(u'='): u'\\u003D',
-    ord(u'-'): u'\\u002D',
-    ord(u';'): u'\\u003B',
-    ord(u'\u2028'): u'\\u2028',
-    ord(u'\u2029'): u'\\u2029'
+    ord('\\'): '\\u005C',
+    ord('\''): '\\u0027',
+    ord('"'): '\\u0022',
+    ord('>'): '\\u003E',
+    ord('<'): '\\u003C',
+    ord('&'): '\\u0026',
+    ord('='): '\\u003D',
+    ord('-'): '\\u002D',
+    ord(';'): '\\u003B',
+    ord('\u2028'): '\\u2028',
+    ord('\u2029'): '\\u2029'
 }
 
 
@@ -59,12 +59,12 @@ class TemplatesRenderer(object):
                 'django', 'locale', [lang], fallback=True
             )
             if not isinstance(self.trs[lang], gettext.GNUTranslations):
-                print "Translation file for %s not found." % lang
+                print("Translation file for %s not found." % lang)
 
     def process_template(self, template, lang, output):
         tr = self.trs[lang]
         def to_unicode(s):
-            if isinstance(s, unicode):
+            if isinstance(s, str):
                 return s
             else:
                 return s.decode('utf-8')
@@ -110,7 +110,7 @@ function get_catalog(globals) {
 globals.i18n_catalog = {\n"""
         entries = []
         plurals = {}
-        for key, val in tr._catalog.items():
+        for key, val in list(tr._catalog.items()):
             if not key:
                 continue
             if isinstance(key, tuple):
@@ -120,10 +120,10 @@ globals.i18n_catalog = {\n"""
                     plurals[key[0]] = {key[1]: val}
             else:
                 entries.append('"%s": "%s"' % (escapejs(key), escapejs(val)))
-        for key, val in plurals.items():
+        for key, val in list(plurals.items()):
             sd = "{\n"
             sds = []
-            for sk, sv in val.items():
+            for sk, sv in list(val.items()):
                 sds.append("    %s: '%s'" % (sk, escapejs(sv)))
             sd += ",\n".join(sds) + "}"
             entries.append('"%s": %s' % (escapejs(key), sd))
@@ -182,7 +182,7 @@ def main():
         network=args.network
     )
 
-    for output, templates in TEMPLATES.iteritems():
+    for output, templates in TEMPLATES.items():
         if output.endswith('*.html'):
             for path in gettext_finder.TEMPLATE_SEARCH_PATH:
                 for fname in glob.glob(os.path.join(path, templates)):
