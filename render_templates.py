@@ -140,7 +140,7 @@ def compile_domain(domain):
         popath = os.path.join('locale', locale, "LC_MESSAGES", domain + ".po")
         mopath = os.path.join('locale', locale, "LC_MESSAGES", domain + ".mo")
 
-        with open(mopath, 'wb') as mo_f, open(popath) as po_f:
+        with open(mopath, 'wb') as mo_f, open(popath, encoding="utf-8") as po_f:
             write_mo(mo_f, read_po(po_f))
 
 
