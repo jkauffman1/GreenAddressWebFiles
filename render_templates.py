@@ -130,7 +130,7 @@ globals.i18n_catalog = {\n"""
         s += ",\n".join(entries)
         s += "\n};}"
         with open(
-                os.path.join(self.outdir, lang, 'i18n_catalog.js'), 'w'
+                os.path.join(self.outdir, lang, 'i18n_catalog.js'), 'wb'
                 ) as f:
             f.write(s.encode('utf-8'))
 
