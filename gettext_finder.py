@@ -175,7 +175,7 @@ def write_po_files(domain):
         popath = os.path.join("locale", locale, "LC_MESSAGES", domain + ".po")
         potpath = os.path.join("locale", domain + ".pot")
 
-        with open(popath, 'r') as po_f, open(potpath, 'r') as pot_f:
+        with open(popath, 'r', encoding="utf-8") as po_f, open(potpath, 'r', encoding="utf-8") as pot_f:
             template = read_po(pot_f)
             catalog = read_po(po_f)
             catalog.update(template)
