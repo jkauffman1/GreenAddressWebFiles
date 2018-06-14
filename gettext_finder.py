@@ -1,4 +1,4 @@
-import logging, os, os.path, sys, cStringIO
+import logging, os, os.path, sys, io
 from itertools import dropwhile
 
 from babel.messages.extract import extract_from_dir
@@ -6,8 +6,9 @@ from babel.messages.catalog import Catalog
 from babel.messages.pofile import write_po, read_po
 import gettext
 import jinja2
+import imp
 
-reload(sys)
+imp.reload(sys)
 sys.setdefaultencoding('utf-8')  # make jinja decode utf8 strings automatically
 
 logging.basicConfig(level=logging.DEBUG, stream=sys.stderr)
@@ -118,7 +119,7 @@ def run_gettext(dirname, for_js):
         catalog.add(message, None, [(filename, lineno)],
                     auto_comments=comments, context=context)
 
-    sio = cStringIO.StringIO()
+    sio = io.StringIO()
     write_po(sio, catalog)
 
     return sio.getvalue()
@@ -146,17 +147,17 @@ def run_jinja_extract(filename):
     trxs = jinja_env.extract_translations(data)
     msgs = ""
     for lineno, function, message in trxs:
-        msgs += u"#: %s:%s\n" % (filename, lineno)
+        msgs += "#: %s:%s\n" % (filename, lineno)
         if function == 'ngettext':
-            msgs += u"msgid %s\n" % pot_str(message[0])
-            msgs += u"msgid_plural %s\n" % pot_str(message[1])
-            msgs += u"msgstr[0] \"\"\n"
-            msgs += u"msgstr[1] \"\"\n\n"
+            msgs += "msgid %s\n" % pot_str(message[0])
+            msgs += "msgid_plural %s\n" % pot_str(message[1])
+            msgs += "msgstr[0] \"\"\n"
+            msgs += "msgstr[1] \"\"\n\n"
         else:
             if isinstance(message, tuple):
                 message = message[0]
-            msgs += u"msgid %s\n" % pot_str(message)
-            msgs += u"msgstr \"\"\n\n"
+            msgs += "msgid %s\n" % pot_str(message)
+            msgs += "msgstr \"\"\n\n"
     return msgs
 
 
