@@ -137,7 +137,7 @@ def pot_str(s):
 
 def run_jinja_extract(filename):
     log.info("Processing template %s", filename)
-    with open(filename, "rU") as f:
+    with open(filename, "rU", encoding="utf-8") as f:
         data = f.read()
 
     tr = gettext.translation(
