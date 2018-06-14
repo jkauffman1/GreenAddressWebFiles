@@ -100,7 +100,7 @@ class TemplatesRenderer(object):
         except OSError as e:
             if e.errno != errno.EEXIST:
                 raise
-        with open(os.path.join(self.outdir, lang, output), 'w+') as f:
+        with open(os.path.join(self.outdir, lang, output), 'wb+') as f:
             f.write(out.encode('utf-8'))
 
     def generate_js_catalog(self, lang):
