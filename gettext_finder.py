@@ -91,9 +91,9 @@ def start():
 def cleanup_msgs(msgs, first_file):
     if not first_file:
         # Strip the shit at the begining.
-        msgs = '\n'.join(dropwhile(len, msgs.split('\n')))
+        msgs = b'\n'.join(dropwhile(len, msgs.split(b'\n')))
     else:
-        msgs = msgs.replace('charset=CHARSET', 'charset=UTF-8')
+        msgs = msgs.replace(b'charset=CHARSET', b'charset=UTF-8')
     return msgs
 
 
