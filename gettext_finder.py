@@ -78,9 +78,9 @@ def start():
         server_msgs += "\n" + msgs
     js_msgs = cleanup_msgs(run_gettext('./build/static', for_js=True), True)
 
-    with open(os.path.join("locale", "django.pot"), "w") as f:
+    with open(os.path.join("locale", "django.pot"), "wb") as f:
         f.write(server_msgs)
-    with open(os.path.join("locale", "djangojs.pot"), "w") as f:
+    with open(os.path.join("locale", "djangojs.pot"), "wb") as f:
         f.write(js_msgs)
 
     make_locale_dirs()
