@@ -519,18 +519,18 @@ chromeDevice.enumerateDongles_async = function(pid) {
 		debug("HID devices 3");
 		debug(devicesHID3);
         	for (var i=0; i<devicesHID.length; i++) {
-                debug("Pushing devicesHID device " + i + " interface = " + devicesHID[i].interface);
+                debug("Pushing devicesHID device " + i + " interface = " + devicesHID[i].device.interface);
           		devicesWinUSB.push(devicesHID[i]);
         	}
         	if (pidHid2 != pidHid) {
           		for (var i=0; i<devicesHID2.length; i++) {
-                        debug("Pushing devicesHID2 device " + i + " interface = " + devicesHID2[i].interface);
+                        debug("Pushing devicesHID2 device " + i + " interface = " + devicesHID2[i].device.interface);
             			devicesWinUSB.push(devicesHID2[i]);
           		}
         	}
 		if (pidHid3 != pidHid) {
 			for (var i=0; i<devicesHID3.length; i++) {
-                debug("Pushing devicesHID3 device " + i + " interface = " + devicesHID3[i].interface);
+                debug("Pushing devicesHID3 device " + i + " interface = " + devicesHID3[i].device.interface);
 				devicesWinUSB.push(devicesHID3[i]);
 			}
 		}
