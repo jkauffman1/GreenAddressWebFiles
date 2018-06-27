@@ -242,10 +242,12 @@ winUSBDevice.enumerate = function(vid, pid, callback) {
 
 
 function hidDevice(hardwareId, hid) {
+    console.log("hidDevice(hardwareId=" + hardwareId + ", hid=" + hid + ")");
     this.hardwareId = hardwareId;
     this.closedDevice = false;
     this.claimed = false;
     this.device = hardwareId.device;
+    console.log("this.device.interface=" + this.device.interface);
     this.hid = hid;
 }
 
