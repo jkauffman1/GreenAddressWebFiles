@@ -120,8 +120,10 @@ function listDevices (network, options) {
 
   return cardFactory.list_async().then(function (list) {
     if (list.length) {
+      console.log("cardFactory.list_async() returned list " + list.length);
       return list;
     } else {
+      console.log("cardFactory.list_async() returned empty list calling cardFactoryNano.list_async()");
       return cardFactoryNano.list_async();
     }
   });

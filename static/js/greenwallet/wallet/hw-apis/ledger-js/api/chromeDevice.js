@@ -31,7 +31,7 @@ if (!global.chrome) {
 
 var Q = require('../thirdparty/q/q.min')
 
-var DEBUG = false;
+var DEBUG = true;
 function debug(message) {
   if (DEBUG) {
     console.log(message);
@@ -502,28 +502,35 @@ chromeDevice.enumerateDongles_async = function(pid) {
   }
   debug("Looking up " + vid +  " " + pid);
 
+  debug("Enumerating winusb vid = " + vid + " pid = " + pid);
   winUSBDevice.enumerate(vid, pid, function(devicesWinUSB) {
     debug("WinUSB devices");
     debug(devicesWinUSB);
+    debug("Enumerating hidDevice vidHid = " + vidHid + " pidHid = " + pidHid + "usagePage = " + usagePage + " pidHidIsLedger = " + pidHidIsLedger);
     hidDevice.enumerate(vidHid, pidHid, usagePage, pidHidIsLedger, function(devicesHID) {
       debug("HID devices");
       debug(devicesHID);
+      debug("Enumerating hidDevice vidHid = " + vidHid + " pidHid2 = " + pidHid2 + "usagePage = " + usagePage);
       hidDevice.enumerate(vidHid, pidHid2, usagePage, true, function(devicesHID2) {
         debug("HID devices 2");
         debug(devicesHID2);
+    debug("Enumerating hidDevice vidHid = " + vidHid + " pidHid3 = " + pidHid3 + "usagePage = " + usagePage);
 	hidDevice.enumerate(vidHid, pidHid3, usagePage, true, function(devicesHID3) {
 		debug("HID devices 3");
 		debug(devicesHID3);
         	for (var i=0; i<devicesHID.length; i++) {
+                debug("Pushing devicesHID device " + i + " interface = " + devicesHID[i].interface);
           		devicesWinUSB.push(devicesHID[i]);
         	}
         	if (pidHid2 != pidHid) {
           		for (var i=0; i<devicesHID2.length; i++) {
+                        debug("Pushing devicesHID2 device " + i + " interface = " + devicesHID2[i].interface);
             			devicesWinUSB.push(devicesHID2[i]);
           		}
         	}
 		if (pidHid3 != pidHid) {
 			for (var i=0; i<devicesHID3.length; i++) {
+                debug("Pushing devicesHID3 device " + i + " interface = " + devicesHID3[i].interface);
 				devicesWinUSB.push(devicesHID3[i]);
 			}
 		}
