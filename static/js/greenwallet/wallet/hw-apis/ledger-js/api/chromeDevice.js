@@ -506,15 +506,15 @@ chromeDevice.enumerateDongles_async = function(pid) {
   winUSBDevice.enumerate(vid, pid, function(devicesWinUSB) {
     debug("WinUSB devices");
     debug(devicesWinUSB);
-    debug("Enumerating hidDevice vidHid = " + vidHid + " pidHid = " + pidHid + "usagePage = " + usagePage + " pidHidIsLedger = " + pidHidIsLedger);
+    debug("Enumerating hidDevice vidHid = " + vidHid + " pidHid = " + pidHid + " usagePage = " + usagePage + " pidHidIsLedger = " + pidHidIsLedger);
     hidDevice.enumerate(vidHid, pidHid, usagePage, pidHidIsLedger, function(devicesHID) {
       debug("HID devices");
       debug(devicesHID);
-      debug("Enumerating hidDevice vidHid = " + vidHid + " pidHid2 = " + pidHid2 + "usagePage = " + usagePage);
+      debug("Enumerating hidDevice vidHid = " + vidHid + " pidHid2 = " + pidHid2 + " usagePage = " + usagePage);
       hidDevice.enumerate(vidHid, pidHid2, usagePage, true, function(devicesHID2) {
         debug("HID devices 2");
         debug(devicesHID2);
-    debug("Enumerating hidDevice vidHid = " + vidHid + " pidHid3 = " + pidHid3 + "usagePage = " + usagePage);
+    debug("Enumerating hidDevice vidHid = " + vidHid + " pidHid3 = " + pidHid3 + " usagePage = " + usagePage);
 	hidDevice.enumerate(vidHid, pidHid3, usagePage, true, function(devicesHID3) {
 		debug("HID devices 3");
 		debug(devicesHID3);
