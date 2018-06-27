@@ -31,6 +31,7 @@ function nodeSend (dev, reportId, data, cb) {
   if (reportId) {
     data = [reportId].concat(data);
   }
+  console.log("dev << " + data.toString());
   dev.write(data);
   cb();
 }
@@ -46,6 +47,7 @@ function nodeSendFeatureReport (dev, reportId, data, cb) {
 }
 function nodeReceive (dev, cb) {
   dev.read(function (_, data) {
+    console.log("dev >> " + data.toString("hex"));
     cb(0, data);
   });
 }
