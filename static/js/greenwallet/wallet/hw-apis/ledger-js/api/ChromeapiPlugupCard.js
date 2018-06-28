@@ -52,6 +52,9 @@ var ChromeapiPlugupCard = module.exports = Class.extend(Card, {
     this.hid = global.chrome ? global.chrome.hid : nodeHid;
 	},
 
+    var hidapi_hack_mode = 'unknown';
+    console.log('JKDBG Init hidapi_hack_mode = ' + hidapi_hack_mode);
+
 	connect_async:function() {
 		var currentObject = this;
 		return this.device.open_async(this.hid).then(function(result) {
@@ -149,7 +152,6 @@ var ChromeapiPlugupCard = module.exports = Class.extend(Card, {
 					currentObject.listener.begin();
 				}
 
-                var hidapi_hack_mode = 'unknown';
 				var performExchange = function() {
 					if (currentObject.winusb) {
 						return currentObject.device.send_async(deferred.promise.apdu.toString(HEX)).then(
