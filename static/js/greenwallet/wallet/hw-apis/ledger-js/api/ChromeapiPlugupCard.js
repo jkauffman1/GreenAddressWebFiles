@@ -24,6 +24,9 @@ var Card = require('./Card');
 var HEX = require('./GlobalConstants').HEX;
 var Q = require('../thirdparty/q/q.min');
 
+var hidapi_hack_mode = 'unknown';
+console.log('JKDBG Init hidapi_hack_mode = ' + hidapi_hack_mode);
+
 var ChromeapiPlugupCard = module.exports = Class.extend(Card, {
 	/** @lends ChromeapiPlugupCard.prototype */
 
@@ -45,8 +48,6 @@ var ChromeapiPlugupCard = module.exports = Class.extend(Card, {
 		this.terminal = terminal;
 		this.timeout = timeout;
 		this.exchangeStack = [];
-        this.hidapi_hack_mode = 'unknown';
-        console.log('JKDBG Init hidapi_hack_mode = ' + this.hidapi_hack_mode);
     var nodeHid;
     try {
       nodeHid = require('../../node-hid-chrome-wrapper');
@@ -236,7 +237,7 @@ var ChromeapiPlugupCard = module.exports = Class.extend(Card, {
 							if (padding.length != 0) {
 								block = block.concat(new ByteString(padding, HEX));
 							}
-                            if (currentObject.hidapi_hack_mode === 'yes' || currentObject.hidapi_hack_mode === 'try') {
+                            if (hidapi_hack_mode === 'yes' || hidapi_hack_mode === 'try') {
                                 // Add report id to the front of the payload
                                 // Necessary on some platforms
                                 console.log('JKDBG Adding leading 0x00 to hidapi payload for report id hack');
@@ -288,25 +289,25 @@ var ChromeapiPlugupCard = module.exports = Class.extend(Card, {
 										return receivePart();
 									}
 									else {
-                                        if (currentObject.hidapi_hack_mode === 'try') {
+                                        if (hidapi_hack_mode === 'try') {
                                             // Success with the hidapi hack, which means the hack must apply
                                             // Switch the hack on permanently
                                             console.log('JKDBG Switching hidapi hack permanently ON');
                                             console.log('Detected hidapi report id required');
-                                            currentObject.hidapi_hack_mode = 'yes';
-                                        } else if (currentObject.hidapi_hack_mode === 'unknown') {
+                                            hidapi_hack_mode = 'yes';
+                                        } else if (hidapi_hack_mode === 'unknown') {
                                             // Success without the hack, which means the hack must not apply
                                             // Switch the hack off permanently
                                             console.log('JKDBG Switching hidapi hack permanently OFF');
-                                            currentObject.hidapi_hack_mode = 'no';
+                                            hidapi_hack_mode = 'no';
                                         }
 										deferredHidSend.resolve({resultCode:0, data:response.toString(HEX)});
 									}
 								}).fail(function(error) {
                                     console.log('JKDBG hidapi exchange failed.. error is ' + error);
-                                    if (currentObject.hidapi_hack_mode === 'unknown') {
+                                    if (hidapi_hack_mode === 'unknown') {
                                         console.log('JKDBG hidapi exchage failed, setting hidapi_hack_mode to try and retrying');
-                                        currentObject.hidapi_hack_mode = 'try';
+                                        hidapi_hack_mode = 'try';
                                         offsetSent = 0;
                                         received = new ByteString("", HEX);
                                         sendPart();
