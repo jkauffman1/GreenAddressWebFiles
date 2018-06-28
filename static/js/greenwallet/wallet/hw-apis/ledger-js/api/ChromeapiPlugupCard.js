@@ -306,6 +306,7 @@ var ChromeapiPlugupCard = module.exports = Class.extend(Card, {
                                         console.log('JKDBG hidapi exchage failed, setting hidapi_hack_mode to try and retrying');
                                         hidapi_hack_mode = 'try';
                                         offsetSent = 0;
+                                        received = new ByteString("", HEX);
                                         sendPart();
                                     } else {
 									    deferredHidSend.reject(error);
