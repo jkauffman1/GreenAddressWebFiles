@@ -534,6 +534,15 @@ chromeDevice.enumerateDongles_async = function(pid) {
 				devicesWinUSB.push(devicesHID3[i]);
 			}
 		}
+
+        // Sort the devices in ascending order of interface
+        // Eventually the first device in the list will be selected, which
+        // usually has interface 0, but on some platforms for some reason
+        // they are in a different order
+        devicesWinUSB.sort( function(a, b) {
+            return a.interface > b.interface;
+        });
+
         	deferred.resolve({
           		deviceList: devicesWinUSB
         	});
