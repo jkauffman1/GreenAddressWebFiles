@@ -307,8 +307,9 @@ var ChromeapiPlugupCard = module.exports = Class.extend(Card, {
                                         hidapi_hack_mode = 'try';
                                         offsetSent = 0;
                                         sendPart();
+                                    } else {
+									    deferredHidSend.reject(error);
                                     }
-									deferredHidSend.reject(error);
 								});
 							}
 						}
