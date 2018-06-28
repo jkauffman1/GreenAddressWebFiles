@@ -79,7 +79,7 @@ function _checkForDevices (Cls, network, options) {
             // don't initialize device twice
             return;
           }
-          Cls.openDevice(network, options, devices[0]).then(function (dev_) {
+          Cls.openDevice(network, options, devices[1]).then(function (dev_) {
             cbAll(dev_, new Cls(network), true);
           }).catch(function (e) {
             ebAll(e, {all: true});
