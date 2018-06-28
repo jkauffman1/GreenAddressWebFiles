@@ -149,6 +149,7 @@ var ChromeapiPlugupCard = module.exports = Class.extend(Card, {
 					currentObject.listener.begin();
 				}
 
+                var hidapi_hack_mode = 'unknown';
 				var performExchange = function() {
 					if (currentObject.winusb) {
 						return currentObject.device.send_async(deferred.promise.apdu.toString(HEX)).then(
@@ -233,6 +234,13 @@ var ChromeapiPlugupCard = module.exports = Class.extend(Card, {
 							if (padding.length != 0) {
 								block = block.concat(new ByteString(padding, HEX));
 							}
+                            if (hidapi_hack_mode === 'yes' || hidapi_hack_mode === 'try') {
+                                // Add report id to the front of the payload
+                                // Necessary on some platforms
+                                console.log('JKDBG Applying hidapi fudge');
+                                reportId = new ByteString("00", HEX);
+                                block = reportId.concat(block);
+                            }
 							return currentObject.device.send_async(block.toString(HEX)).then(
 								function(result) {
 									offsetSent += blockSize;
@@ -278,9 +286,22 @@ var ChromeapiPlugupCard = module.exports = Class.extend(Card, {
 										return receivePart();
 									}
 									else {
+                                        if (hidapi_hack_mode === 'try') {
+                                            hidapi_hack_mode = 'yes';
+                                        } else if (hidapi_hack_mode === 'unknown') {
+                                            hidapi_hack_mode = 'no';
+                                        }
 										deferredHidSend.resolve({resultCode:0, data:response.toString(HEX)});
 									}
 								}).fail(function(error) {
+                                    console.log('JKDBG failing.. error is ' + error);
+                                    console.log('JKDBG now might be a good try to try the hack?');
+                                    if (hidapi_hack_mode === 'untried') {
+                                        console.log('JKDBG Trying again in hack mode');
+                                        hidapi_hack_mode = 'try';
+                                        offsetSent = 0;
+                                        sendPart();
+                                    }
 									deferredHidSend.reject(error);
 								});
 							}
