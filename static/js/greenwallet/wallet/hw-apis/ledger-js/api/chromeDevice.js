@@ -502,20 +502,27 @@ chromeDevice.enumerateDongles_async = function(pid) {
   }
   debug("Looking up " + vid +  " " + pid);
 
+  var byInterface = function(a, b) {
+      return a.device.interface > b.device.interface;
+  };
+
   debug("Enumerating winusb vid = " + vid + " pid = " + pid);
   winUSBDevice.enumerate(vid, pid, function(devicesWinUSB) {
     debug("WinUSB devices");
     debug(devicesWinUSB);
     debug("Enumerating hidDevice vidHid = " + vidHid + " pidHid = " + pidHid + " usagePage = " + usagePage + " pidHidIsLedger = " + pidHidIsLedger);
     hidDevice.enumerate(vidHid, pidHid, usagePage, pidHidIsLedger, function(devicesHID) {
+        devicesHID.sort(byInterface);
       debug("HID devices");
       debug(devicesHID);
       debug("Enumerating hidDevice vidHid = " + vidHid + " pidHid2 = " + pidHid2 + " usagePage = " + usagePage);
       hidDevice.enumerate(vidHid, pidHid2, usagePage, true, function(devicesHID2) {
+        devicesHID2.sort(byInterface);
         debug("HID devices 2");
         debug(devicesHID2);
     debug("Enumerating hidDevice vidHid = " + vidHid + " pidHid3 = " + pidHid3 + " usagePage = " + usagePage);
 	hidDevice.enumerate(vidHid, pidHid3, usagePage, true, function(devicesHID3) {
+        deviesHID3.sort(byInterface);
 		debug("HID devices 3");
 		debug(devicesHID3);
         	for (var i=0; i<devicesHID.length; i++) {
