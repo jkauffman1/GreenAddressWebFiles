@@ -522,7 +522,7 @@ chromeDevice.enumerateDongles_async = function(pid) {
         debug(devicesHID2);
     debug("Enumerating hidDevice vidHid = " + vidHid + " pidHid3 = " + pidHid3 + " usagePage = " + usagePage);
 	hidDevice.enumerate(vidHid, pidHid3, usagePage, true, function(devicesHID3) {
-        deviesHID3.sort(byInterface);
+        devicesHID3.sort(byInterface);
 		debug("HID devices 3");
 		debug(devicesHID3);
         	for (var i=0; i<devicesHID.length; i++) {
