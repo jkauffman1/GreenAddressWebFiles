@@ -237,7 +237,7 @@ var ChromeapiPlugupCard = module.exports = Class.extend(Card, {
                             if (hidapi_hack_mode === 'yes' || hidapi_hack_mode === 'try') {
                                 // Add report id to the front of the payload
                                 // Necessary on some platforms
-                                console.log('JKDBG Applying hidapi fudge');
+                                console.log('JKDBG Adding leading 0x00 to hidapi payload for report id hack');
                                 reportId = new ByteString("00", HEX);
                                 block = reportId.concat(block);
                             }
@@ -287,17 +287,22 @@ var ChromeapiPlugupCard = module.exports = Class.extend(Card, {
 									}
 									else {
                                         if (hidapi_hack_mode === 'try') {
+                                            // Success with the hidapi hack, which means the hack must apply
+                                            // Switch the hack on permanently
+                                            console.log('JKDBG Switching hidapi hack permanently ON');
                                             hidapi_hack_mode = 'yes';
                                         } else if (hidapi_hack_mode === 'unknown') {
+                                            // Success without the hack, which means the hack must not apply
+                                            // Switch the hack off permanently
+                                            console.log('JKDBG Switching hidapi hack permanently OFF');
                                             hidapi_hack_mode = 'no';
                                         }
 										deferredHidSend.resolve({resultCode:0, data:response.toString(HEX)});
 									}
 								}).fail(function(error) {
-                                    console.log('JKDBG failing.. error is ' + error);
-                                    console.log('JKDBG now might be a good try to try the hack?');
-                                    if (hidapi_hack_mode === 'untried') {
-                                        console.log('JKDBG Trying again in hack mode');
+                                    console.log('JKDBG hidapi exchange failed.. error is ' + error);
+                                    if (hidapi_hack_mode === 'unknown') {
+                                        console.log('JKDBG hidapi exchage failed, setting hidapi_hack_mode to try and retrying');
                                         hidapi_hack_mode = 'try';
                                         offsetSent = 0;
                                         sendPart();
