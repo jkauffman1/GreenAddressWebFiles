@@ -46,7 +46,7 @@ var ChromeapiPlugupCard = module.exports = Class.extend(Card, {
 		this.timeout = timeout;
 		this.exchangeStack = [];
         this.hidapi_hack_mode = 'unknown';
-        console.log('JKDBG Init hidapi_hack_mode = ' + hidapi_hack_mode);
+        console.log('JKDBG Init hidapi_hack_mode = ' + this.hidapi_hack_mode);
     var nodeHid;
     try {
       nodeHid = require('../../node-hid-chrome-wrapper');
