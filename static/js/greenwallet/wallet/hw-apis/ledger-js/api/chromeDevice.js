@@ -539,9 +539,13 @@ chromeDevice.enumerateDongles_async = function(pid) {
         // Eventually the first device in the list will be selected, which
         // usually has interface 0, but on some platforms for some reason
         // they are in a different order
+        console.log('JKDBG devicesWinUSB pre-sort = ' + devicesWinUSB);
+        console.log('JKDBG devicesWinUSB[0].interface pre-sort = ' + devicesWinUSB[0].interface);
         devicesWinUSB.sort( function(a, b) {
             return a.interface > b.interface;
         });
+        console.log('JKDBG devicesWinUSB post-sort = ' + devicesWinUSB);
+        console.log('JKDBG devicesWinUSB[0].interface post-sort = ' + devicesWinUSB[0].interface);
 
         	deferred.resolve({
           		deviceList: devicesWinUSB
