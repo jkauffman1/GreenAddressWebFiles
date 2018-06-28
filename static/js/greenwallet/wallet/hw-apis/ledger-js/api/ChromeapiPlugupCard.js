@@ -290,6 +290,7 @@ var ChromeapiPlugupCard = module.exports = Class.extend(Card, {
                                             // Success with the hidapi hack, which means the hack must apply
                                             // Switch the hack on permanently
                                             console.log('JKDBG Switching hidapi hack permanently ON');
+                                            console.log('Detected hidapi report id required');
                                             hidapi_hack_mode = 'yes';
                                         } else if (hidapi_hack_mode === 'unknown') {
                                             // Success without the hack, which means the hack must not apply
